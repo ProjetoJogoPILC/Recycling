@@ -1,17 +1,17 @@
 extends KinematicBody2D
 
 
-export(float, 0, 1500) var max_speed      = 272
-export(float, 0, 1   ) var acceleration   = 0.2
-export(float, 0, 1   ) var deacceleration = 0.7
-export(int  , 0, 10  ) var iventory_size  = 1
+export(float, 0, 1500) var max_speed
+export(float, 0, 1   ) var acceleration
+export(float, 0, 1   ) var deacceleration
+export(int  , 0, 10  ) var iventory_size
 
 var speed = Vector2.ZERO
 var overlapping_items = []
 var iventory = []
 var can_drop_item_in_robot = false
 
-
+signal robot_move_request(position)
 
 func _ready():
     TrashBus.connect("trash_dropped", self, "_trash_dropped_signal")
@@ -19,6 +19,9 @@ func _ready():
 
 
 func _process(_delta):
+    if Input.is_action_just_released("move_request"):
+        emit_signal("robot_move_request", get_global_mouse_position())
+
     _movement()
     if not _item_pick():
         _item_drop()
