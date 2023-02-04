@@ -27,12 +27,13 @@ export(NodePath) var navNode
 onready var robotNavigation:Navigation2D = get_node(navNode)
 onready var line = $Line2D
 
-
+onready var sprite = $Sprite
+var qtd_sprites
 
 func _ready():
     de_select()
     line.hide()
-    pre_select_icon = get_node("PreSelect")
+    qtd_sprites = sprite.hframes
 
     metalDisplay    = get_node("Control/HBoxContainer/VBoxContainer2/metalQtd"  )
     plasticDisplay  = get_node("Control/HBoxContainer/VBoxContainer2/plasticQtd")
@@ -40,8 +41,19 @@ func _ready():
     eletricDisplay  = get_node("Control/HBoxContainer/VBoxContainer2/eletricQtd")
     _update_display()
 
+
 func _process(_delta):
-    pass
+    sprite_direction()
+    
+
+func sprite_direction():
+    var t_ang = speed.angle()
+    t_ang = 2*PI - t_ang
+    var x = t_ang - (PI/qtd_sprites)
+    var t = (qtd_sprites * x) / (2 * PI)
+    t = abs(int(t) + 1 + qtd_sprites / 4) % qtd_sprites 
+    sprite.set_frame(t)
+
 
 func _physics_process(delta):
     line.global_position = Vector2.ZERO
