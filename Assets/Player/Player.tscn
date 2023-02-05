@@ -13,6 +13,10 @@ radius = 24.0208
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 748, 335 )
 script = ExtResource( 2 )
+max_speed = 254.516
+acceleration = 0.584
+deacceleration = 0.447
+iventory_size = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, 1 )
