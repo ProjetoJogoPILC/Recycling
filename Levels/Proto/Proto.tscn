@@ -12,6 +12,10 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="TrashInstantiator" type="Node2D" parent="."]
+position = Vector2( -1878, -902 )
+script = ExtResource( 4 )
+
 [node name="Ground" type="TileMap" parent="."]
 scale = Vector2( 3, 3 )
 tile_set = ExtResource( 5 )
@@ -48,16 +52,11 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="TrashInstantiator" type="Node2D" parent="YSort"]
-position = Vector2( -1878, -902 )
-script = ExtResource( 4 )
-
 [node name="Player" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 1534, 619 )
 max_speed = 356.557
 acceleration = 0.221
 deacceleration = 0.713
-iventory_size = 1
 
 [node name="Camera2D" type="Camera2D" parent="YSort/Player"]
 current = true

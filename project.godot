@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="recycling"
-run/main_scene="res://Levels/Proto/Proto.tscn"
+run/main_scene="res://Levels/Proto/test_scene.tscn"
 config/icon="res://icon.png"
 
 [autoload]
