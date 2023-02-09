@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/smallRoad.png-78ab628da0cfb912edcfe985bb243fb5.stex"
+path="res://.import/transparent.png-53effa81b25f58df153b8c728d7681f2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Map Spirtes/Kenny_RpgKit/smallRoad.png"
-dest_files=[ "res://.import/smallRoad.png-78ab628da0cfb912edcfe985bb243fb5.stex" ]
+source_file="res://Assets/Map Spirtes/Kenny_RpgKit/transparent.png"
+dest_files=[ "res://.import/transparent.png-53effa81b25f58df153b8c728d7681f2.stex" ]
 
 [params]
 
