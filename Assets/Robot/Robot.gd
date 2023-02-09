@@ -75,13 +75,13 @@ func _on_InteractionArea_area_entered(area):
     if area.is_in_group("pickable"):
         var trash = area.get_owner()
         var trash_type = trash.get_type()
-        if trash_type == 0:
+        if trash_type == "metal":
             metal_stored += 1
-        if trash_type == 1:
+        if trash_type == "plastic":
             plastic_stored += 1
-        if trash_type == 2:
+        if trash_type == "glass":
             glass_stored += 1
-        if trash_type == 3:
+        if trash_type == "electric":
             eletric_stored += 1
         trash.queue_free()
         _update_display()

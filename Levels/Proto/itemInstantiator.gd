@@ -3,9 +3,25 @@ extends Node2D
 export(NodePath) var node_to_instantiate_at
 onready var node_tree:Node2D = get_node(node_to_instantiate_at)
 
+var expression = Expression.new()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    instantiate_item_at("res://Assets/Items/ElectricTrash.json", self.global_position)
+    TrashBus.connect("drop_trash", self, "_on_create_trash")
+
+
+func _on_create_trash(type, location):
+    var p 
+    if type == "metal":
+        p = "res://Assets/Items/MetalTrash.json"
+    elif type == "plastic":
+        p = "res://Assets/Items/PlasticTrash.json"
+    elif type == "glass":
+        p = "res://Assets/Items/GlassTrash.json"
+    elif type == "electric":
+        p = "res://Assets/Items/ElectricTrash.json"
+    instantiate_item_at(p, location)
+    TrashBus.emit_signal("trash_dropped")
 
 
 func instantiate_item_at(file_path: String, position: Vector2):
@@ -15,30 +31,17 @@ func instantiate_item_at(file_path: String, position: Vector2):
     var json_parsed = JSON.parse(fi.get_as_text())
     var scene = json_parsed.result["scene"]
     
-    # The block below loads the scene and calls each function and parameters 
-    # on it as defined in the json file.
     var item = load(scene).instance()
-    item.set_type("electric")
+
     var item_parameters = json_parsed.result["parameters"]
     for key in item_parameters:
         var f_name = item_parameters[key]["function"]
         var params = item_parameters[key]["values"]
-        var call_string:String = build_call_string_function(f_name, params)
-        call_string = "item." + call_string 
-        var expression = Expression.new()
-        var parse_success = expression.parse(call_string, [])
-        if parse_success != OK:
-            print("Error, cant parse \"" + call_string + "\"!" )
-            return
-        else:
-            expression.execute()
-    
-    # add the json path to the item and add instance 
-    # into the scene at the desired position
-    item.item.set_json_path(file_path)
-    item.set_global_position(position)
-    node_tree.add_child(item)
+        item.call(f_name, params[0])
 
+    item.set_global_position(position)
+    item.item.set_json_path(file_path)
+    node_tree.add_child(item)
 
 # Builds a call string using 'f' as a function name and 'a' as parameters. Best used
 # In conjunction with Expression.

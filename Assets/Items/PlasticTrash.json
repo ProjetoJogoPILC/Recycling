@@ -1,0 +1,12 @@
+{
+    "name": "Metal trash",
+    "scene": "res://Assets/Trash/Trash.tscn",
+    "parameters": {
+        "type setting": {
+            "function": "set_type",
+            "values": [
+                "plastic"
+            ]
+        }
+    }
+}
