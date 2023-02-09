@@ -55,7 +55,7 @@ func sprite_direction():
     sprite.set_frame(t)
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
     line.global_position = Vector2.ZERO
     if moving_to_target:
         generate_path(target)
@@ -123,9 +123,9 @@ func _on_Player_robot_move_request(position):
     moving_to_target = true
 
 
-func generate_path(target):
+func generate_path(t):
     if robotNavigation != null:
-        path = robotNavigation.get_simple_path(global_position, target, true)
+        path = robotNavigation.get_simple_path(global_position, t, true)
         line.points = path
 
 

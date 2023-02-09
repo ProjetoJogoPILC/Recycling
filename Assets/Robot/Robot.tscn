@@ -15,6 +15,10 @@ height = 12.0001
 [node name="Robot" type="KinematicBody2D"]
 collision_layer = 3
 script = ExtResource( 2 )
+maxMovSpeed = 210.0
+slowMovSpeed = 210.0
+acceleration = 0.685
+deacceleration = 0.231
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
