@@ -4,11 +4,11 @@ extends KinematicBody2D
 export(float, 0, 1500) var max_speed
 export(float, 0, 1   ) var acceleration
 export(float, 0, 1   ) var deacceleration
-export(int  , 0, 10  ) var iventory_size
+export(int  , 0, 10  ) var inventory_size
 
 var speed = Vector2.ZERO
 var overlapping_items = []
-var iventory = []
+var inventory = []
 var can_drop_item_in_robot = false
 
 signal robot_move_request(position)
@@ -63,7 +63,7 @@ func _on_InteractionArea_area_exited(area):
 
 
 func _item_pick():
-    if overlapping_items.size() != 0 and iventory.size() < iventory_size:
+    if overlapping_items.size() != 0 and inventory.size() < inventory_size:
         ##################################
         # Sorts item by distance to player to remove confusion
         # when selecting Items from the floor
@@ -74,7 +74,7 @@ func _item_pick():
         selected_item.pre_select()
         ##################################
         if Input.is_action_just_released("ui_accept"):
-            iventory.append(selected_item.get_type())
+            inventory.append(selected_item.get_type())
             selected_item.de_select()
             selected_item.queue_free()
             return true
@@ -82,12 +82,12 @@ func _item_pick():
 
 
 func _item_drop():
-    if iventory.size() > 0 and Input.is_action_just_released("ui_accept"):
-        TrashBus.emit_signal("drop_trash", iventory.back(), self.global_position)
+    if inventory.size() > 0 and Input.is_action_just_released("ui_accept"):
+        TrashBus.emit_signal("drop_trash", inventory.back(), self.global_position)
 
 
 func _trash_dropped_signal():
-    iventory.pop_back()
+    inventory.pop_back()
     
 
 func _sortDescendingByDistance(a, b):

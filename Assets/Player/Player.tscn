@@ -16,7 +16,7 @@ script = ExtResource( 2 )
 max_speed = 254.516
 acceleration = 0.584
 deacceleration = 0.447
-iventory_size = 1
+inventory_size = 1
 
 [node name="InteractionArea" type="Area2D" parent="."]
 
