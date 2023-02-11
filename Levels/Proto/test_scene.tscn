@@ -1,11 +1,15 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Assets/Player/Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Map Spirtes/modern city assets/modern_city_assets_outdoors_tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://Assets/Robot/Robot.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Map Spirtes/Kenny_RpgKit/big_roads_tileset.tres" type="TileSet" id=4]
 [ext_resource path="res://Levels/Proto/TrashInstantiator.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Assets/Trash/Trash.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Levels/Proto/GUI.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Trash/MetalTrash.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/Trash/GlassTrash.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Assets/Trash/ElectricTrash.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Trash/PlasticTrash.tscn" type="PackedScene" id=11]
 
 [node name="Node2D" type="Node2D"]
 
@@ -35,7 +39,7 @@ tile_data = PoolIntArray( -1769364, 12, 0, -1769363, 12, 196609, -1769362, 12, 1
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
-position = Vector2( 373, 242 )
+position = Vector2( 297, 221 )
 max_speed = 287.671
 acceleration = 0.694
 deacceleration = 0.36
@@ -45,24 +49,24 @@ current = true
 zoom = Vector2( 0.5, 0.5 )
 
 [node name="Robot" parent="YSort" instance=ExtResource( 3 )]
-position = Vector2( 74, -70 )
+position = Vector2( 75, -108 )
 maxMovSpeed = 191.781
 slowMovSpeed = 192.144
 acceleration = 0.662
 deacceleration = 0.187
 navNode = NodePath("../../Navigation2D")
 
-[node name="Trash3" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 288, 249 )
-type = "metal"
+[node name="GlassTrash" parent="YSort" instance=ExtResource( 8 )]
+position = Vector2( 415, 318 )
 
-[node name="Trash6" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 418, 307 )
-type = "plastic"
+[node name="PlasticTrash" parent="YSort" instance=ExtResource( 11 )]
+position = Vector2( 287, 276 )
 
-[node name="Trash7" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 278, 298 )
-type = "glass"
+[node name="MetalTrash" parent="YSort" instance=ExtResource( 7 )]
+position = Vector2( 280, 313 )
+
+[node name="ElectricTrash" parent="YSort" instance=ExtResource( 9 )]
+position = Vector2( 389, 278 )
 
 [node name="L2" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
@@ -72,4 +76,8 @@ tile_data = PoolIntArray( -3538933, 49, 0, -3538848, 49, 0, -3473398, 56, 0, -34
 
 [node name="TrashInstantiator" parent="." instance=ExtResource( 5 )]
 
-[connection signal="robot_move_request" from="YSort/Player" to="YSort/Robot" method="_on_Player_robot_move_request"]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" parent="CanvasLayer" instance=ExtResource( 6 )]
+
+[connection signal="robot_move_request" from="CanvasLayer/GUI" to="YSort/Robot" method="_on_GUI_robot_move_request"]

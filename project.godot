@@ -9,13 +9,19 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Reference",
+"base": "Area2D",
 "class": "Item",
 "language": "GDScript",
 "path": "res://Assets/Items/Item.gd"
+}, {
+"base": "Reference",
+"class": "ItemClasses",
+"language": "GDScript",
+"path": "res://Assets/Items/ItemClasses.gd"
 } ]
 _global_script_class_icons={
-"Item": ""
+"Item": "",
+"ItemClasses": ""
 }
 
 [application]
@@ -26,7 +32,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-TrashBus="*res://Levels/Proto/trashBus.gd"
+ItemBus="*res://Levels/Proto/ItemBus.gd"
 
 [gui]
 
