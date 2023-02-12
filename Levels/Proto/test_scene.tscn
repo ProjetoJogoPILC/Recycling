@@ -79,5 +79,6 @@ tile_data = PoolIntArray( -3538933, 49, 0, -3538848, 49, 0, -3473398, 56, 0, -34
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="GUI" parent="CanvasLayer" instance=ExtResource( 6 )]
+root_node = NodePath("../..")
 
 [connection signal="robot_move_request" from="CanvasLayer/GUI" to="YSort/Robot" method="_on_GUI_robot_move_request"]
