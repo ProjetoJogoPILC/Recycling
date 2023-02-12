@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Player/InteractionArea.gd" type="Script" id=1]
+
+[node name="InteractionArea" type="Area2D"]
+script = ExtResource( 1 )
+allowed_item_class = [ "collectable" ]
+
+[connection signal="area_entered" from="." to="." method="_on_InteractionArea_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_InteractionArea_area_exited"]

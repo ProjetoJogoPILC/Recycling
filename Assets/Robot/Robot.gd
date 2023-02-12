@@ -116,7 +116,7 @@ func navigate():
         path.clear()
         moving_to_target = false
 
-func _on_Player_robot_move_request(position):
+func _on_GUI_robot_move_request(position):
     line.show()
     speed = Vector2.ZERO
     target = position
