@@ -10,6 +10,7 @@ var speed = Vector2.ZERO
 var inventory = []
 var can_drop_item_in_robot = false
 var item_pickup_area: Area2D
+onready var anim: AnimationTree = $AnimationTree
 
 func _ready():
     ItemBus.connect("item_dropped", self, "_item_dropped_signal")
@@ -32,12 +33,18 @@ func _movement():
         direction += Vector2(-1,  0);
     if Input.is_action_pressed("move_right"):
         direction += Vector2( 1,  0);
-
+    
     if direction.length() != 0:
-        speed = speed.linear_interpolate(direction * max_speed, acceleration)
+        anim.get("parameters/playback").travel("running")
+        anim.set("parameters/running/blend_position", direction)
+        anim.set("parameters/still/blend_position", direction)
+        speed = speed.linear_interpolate(direction.normalized() * max_speed, acceleration)
     else:
-        speed = speed.linear_interpolate(direction, deacceleration)
+        speed = speed.linear_interpolate(direction.normalized(), deacceleration)
+    
     speed = move_and_slide(speed)
+    if speed.length() < 50:
+        anim.get("parameters/playback").travel("still")
 
 
 func _item_pick():
