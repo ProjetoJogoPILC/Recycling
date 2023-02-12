@@ -26,7 +26,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-TrashBus="*res://Levels/Proto/trashBus.gd"
+ItemBus="*res://Levels/Proto/ItemBus.gd"
 
 [gui]
 
