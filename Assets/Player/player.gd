@@ -2,10 +2,12 @@ extends KinematicBody2D
 
 
 export(float, 0, 1500) var max_speed
+export(float, 0, 1500) var item_carry_speed
 export(float, 0, 1   ) var acceleration
 export(float, 0, 1   ) var deacceleration
 export(int  , 0, 10  ) var inventory_size
 
+var final_speed = Vector2.ZERO
 var speed = Vector2.ZERO
 var inventory = []
 var can_drop_item_in_robot = false
@@ -18,9 +20,17 @@ func _ready():
 
 
 func _process(_delta):
+    _player_speed_selector()
     _movement()
     if not _item_pick():
         _item_drop()
+
+
+func _player_speed_selector():
+    if inventory.size() != 0:
+        final_speed = item_carry_speed
+    else:
+        final_speed = max_speed
 
 
 func _movement():
@@ -38,7 +48,7 @@ func _movement():
         anim.get("parameters/playback").travel("running")
         anim.set("parameters/running/blend_position", direction)
         anim.set("parameters/still/blend_position", direction)
-        speed = speed.linear_interpolate(direction.normalized() * max_speed, acceleration)
+        speed = speed.linear_interpolate(direction.normalized() * final_speed, acceleration)
     else:
         speed = speed.linear_interpolate(direction.normalized(), deacceleration)
     
