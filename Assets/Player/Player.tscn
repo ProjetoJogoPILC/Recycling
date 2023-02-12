@@ -180,11 +180,11 @@ acceleration = 0.584
 deacceleration = 0.447
 inventory_size = 1
 
-[node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 0, 12 )
+[node name="PlayerFeet" type="Position2D" parent="."]
+position = Vector2( 0, 14 )
 
 [node name="InteractionArea" parent="." instance=ExtResource( 3 )]
-get_position = NodePath("../Position2D")
+get_position = NodePath("../PlayerFeet")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
 position = Vector2( 0, 2 )
