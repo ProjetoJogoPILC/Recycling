@@ -2,19 +2,10 @@ extends KinematicBody2D
 
 
 onready var pre_select_icon = get_node("PreSelect")
-
-onready var metalDisplay   = get_node("Control/HBoxContainer/VBoxContainer2/metalQtd"  )
-onready var plasticDisplay = get_node("Control/HBoxContainer/VBoxContainer2/plasticQtd")
-onready var glassDisplay   = get_node("Control/HBoxContainer/VBoxContainer2/glassQtd"  )
-onready var eletricDisplay = get_node("Control/HBoxContainer/VBoxContainer2/eletricQtd")
-
-var metal_stored = 0 
-var plastic_stored = 0 
-var glass_stored = 0 
-var eletric_stored = 0
-
+var qtd_sprites
 
 var speed: Vector2 = Vector2.ZERO
+
 var path: Array = []
 var moving_to_target = false
 var target: Vector2 = Vector2.ZERO
@@ -23,23 +14,20 @@ export(float, 0, 600) var maxMovSpeed
 export(float, 0, 600) var slowMovSpeed
 export(float, 0, 1) var acceleration
 export(float, 0, 1) var deacceleration
+
+export(bool) var simplify_path
+
 export(NodePath) var navNode
 onready var robotNavigation:Navigation2D = get_node(navNode)
-onready var line = $Line2D
 
+onready var line = $Line2D
 onready var sprite = $Sprite
-var qtd_sprites
+
 
 func _ready():
     de_select()
     line.hide()
     qtd_sprites = sprite.hframes
-
-    metalDisplay    = get_node("Control/HBoxContainer/VBoxContainer2/metalQtd"  )
-    plasticDisplay  = get_node("Control/HBoxContainer/VBoxContainer2/plasticQtd")
-    glassDisplay    = get_node("Control/HBoxContainer/VBoxContainer2/glassQtd"  )
-    eletricDisplay  = get_node("Control/HBoxContainer/VBoxContainer2/eletricQtd")
-    _update_display()
 
 
 func _process(_delta):
@@ -71,34 +59,8 @@ func de_select():
     pre_select_icon.hide()
 
 
-func _on_InteractionArea_area_entered(area):
-    if area.is_in_group("pickable"):
-        var trash = area.get_owner()
-        var trash_type = trash.get_type()
-        if trash_type == "metal":
-            metal_stored += 1
-        if trash_type == "plastic":
-            plastic_stored += 1
-        if trash_type == "glass":
-            glass_stored += 1
-        if trash_type == "electric":
-            eletric_stored += 1
-        trash.queue_free()
-        _update_display()
-
-func _update_display():
-    metalDisplay  .set_text(str(metal_stored  ))
-    plasticDisplay.set_text(str(plastic_stored))
-    glassDisplay  .set_text(str(glass_stored  ))
-    eletricDisplay.set_text(str(eletric_stored))
-    pass
-
-func _on_InteractionArea_area_exited(area):
-    pass # Replace with function body.
-
-
 func navigate():
-    if path.size() > 0 and global_position.distance_to(path.back()) > 30:
+    if path.size() > 0 and global_position.distance_to(path.back()) > 51:
         var direction = global_position.direction_to(path[1])
         var l = 0.0
         for i in range(1, path.size()):
@@ -116,6 +78,7 @@ func navigate():
         path.clear()
         moving_to_target = false
 
+
 func _on_GUI_robot_move_request(position):
     line.show()
     speed = Vector2.ZERO
@@ -125,7 +88,7 @@ func _on_GUI_robot_move_request(position):
 
 func generate_path(t):
     if robotNavigation != null:
-        path = robotNavigation.get_simple_path(global_position, t, true)
+        path = robotNavigation.get_simple_path(global_position, t, simplify_path)
         line.points = path
 
 
